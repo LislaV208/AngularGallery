@@ -1,0 +1,37 @@
+<h3>Dodaj komentarz</h3>
+<form #commentForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+  <label>First name</label>
+  <input type="text" class="input-control" name="firstName" #firstName="ngModel" [(ngModel)]="comment.firstName" required>
+  <p [hidden]="firstName.valid || firstName.pristine">First name required!</p>
+  
+  <label>Last name</label>
+  <input type="text" class="input-control" name="lastName" #lastName="ngModel" [(ngModel)]="comment.lastName" required>
+  <p [hidden]="lastName.valid || lastName.pristine">Last name required!</p>
+  
+  <label>Email</label>
+  <input type="email" class="input-control" name="email" #email="ngModel" [(ngModel)]="comment.email" 
+  required pattern="[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*">
+
+  
+
+  <p class="form-error" *ngIf="email.invalid && !email.pristine && !email.dirty">Email required!</p>
+  <p class="form-error" *ngIf="email.invalid && !email.pristine && email.dirty">Wrong email!</p>
+  <!-- <p [hidden]="firstName.valid || firstName.pristine">First name required!</p> -->
+  
+  <label>Message</label>
+  <input type="text" class="input-control" name="message" #message="ngModel" [(ngModel)]="comment.message" required>
+  <p [hidden]="message.valid || message.pristine">Message required!</p>
+  
+  <button class="button button-primary" [disabled]="!commentForm.form.valid">Send Message</button>
+</form>
+
+<div class="comments">
+  <h3>Komentarze</h3>
+  <div class="comment" *ngFor="let comment of comments">
+    <h4>{{comment.firstName}} {{comment.lastName}} ({{comment.email}}):</h4>
+    <span>{{comment.message}}</span>
+    <button (click)="deleteComment(comment.commentId)">Usuń</button>
+  </div>
+
+  <p *ngIf="comments.length == 0">Brak komentarzy.</p>
+</div>

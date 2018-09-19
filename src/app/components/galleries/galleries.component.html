@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="grid-12 grid-centered">
+        <div class="row">
+            <div class="grid-12">
+                <h1>{{title}}</h1>
+                <h5>{{description}}</h5>
+            </div>
+            <div class="grid-2">
+                <galleries-search (searchValue)="setSearchValue($event)"></galleries-search>
+            </div>
+
+            <div class="grid-2 text-right" *ngIf="!showGalleryForm">
+                <button class="button button-success" (click)="showGalleryForm=true"><i class="fa fa-plus"></i></button>
+            </div>     
+        </div>
+
+        <div class="row" *ngIf="showGalleryForm">
+            <div class="grid-8">
+                <h2>Add new gallery</h2>
+            </div>
+            <div class="grid-8 text-right">
+                <button class="button button-success" (click)="showGalleryForm=false">Back</button>
+            </div>
+            <add-gallery-form (saveGallery)="saveGallery($event)"></add-gallery-form>
+        </div>
+           
+        <div *ngIf="!showGalleryForm">
+            <div class="row row-align-middle"  *ngIf="galleries && galleries.length">
+                <gallery class="grid-5 grid-centered" *ngFor="let item of galleries | searchGalleries : searchValue | slice:start:end; trackBy:item?.galleryId" [gallery]="item"></gallery>
+            </div>
+            <div class="paging" *ngIf="galleries">
+                    <span class="pagingBtn pagingNav">&lt;</span>
+                    <span class="pagingBtn" *ngFor="let item of numberOfPages; let i = index" (click)="setCurrentPage(i)">{{i + 1}}</span>
+                    <span class="pagingBtn pagingNav">&gt;</span>
+                <p>Strona {{currentPage+1}} z {{numberOfPages.length}}</p>
+            </div>
+    
+            <button class="button button-success" (click)="exportGalleries()">Export galleries</button>
+            <button class="button button-success" (click)="removeGalleries()">Remove galleries</button>
+            <button class="button button-success" *ngFor="let item of galleries" (click)="removeGallery(item.galleryId)">Remove gallery: {{item.title}}</button>
+            <p *ngIf="galleries">Ilosc galerii: {{galleries.length}}</p>
+        </div>
+
+    </div>
+</div>

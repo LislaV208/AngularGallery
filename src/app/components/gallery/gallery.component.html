@@ -1,0 +1,6 @@
+<p>{{gallery.title}}</p>
+<a routerLink="/galleries/{{gallery.galleryId}}">
+    <img src="{{gallery.thumbUrl}}" />
+</a>
+<p><small>{{gallery.dateCreated | polishDate | uppercase}}</small></p>
+<p>{{gallery.description}}</p>

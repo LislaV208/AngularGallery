@@ -1,0 +1,21 @@
+<div class="container" *ngIf=" gallery">
+<h2>{{gallery.title}}</h2>
+<p>{{gallery.description}}</p>
+<small>{{gallery.dateCreated | polishDate }}</small>
+
+<div class="tags" >
+<small class="tag" *ngFor="let tag of gallery.tags" >{{tag}}</small>
+</div>
+</div>
+
+<img *ngIf=" gallery" src={{gallery.photos[0].imgUrl}} width="600" height="400">
+
+<div class="row" *ngIf=" gallery">
+    <div *ngFor="let img of gallery.photos"><img src={{img.thumbUrl}}></div>
+</div>
+
+<comment-form *ngIf=" gallery" galleryId="{{gallery.galleryId}}">
+    
+</comment-form>
+
+<!-- <div class="grid-5 grid-centered" *ngFor="let item of comment-form [comment-form]="item"></div> -->
